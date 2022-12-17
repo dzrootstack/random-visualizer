@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Badge, Box, Button, IconButton, Select, Option, Slider, Typography, useColorScheme } from '@mui/joy';
-import { FiTarget } from 'react-icons/fi';
+import { Badge, Box, Button,  Select, Option, Slider } from '@mui/joy';
 import { TbRepeat } from 'react-icons/tb';
 
 import { register } from '../utils/themes/charts/Dark';
@@ -8,6 +7,7 @@ import Layout from '../components/Layout';
 import ScatterView from '../components/ScatterView';
 import HeatmapView from '../components/HeatmapView';
 import Randomize from '../utils/Randomize';
+import CodeView from '../components/CodeView';
 
 export default function Simulation() {
   const [values, setValues] = useState<[number, number][]>([]);
@@ -18,44 +18,26 @@ export default function Simulation() {
     const newValues: typeof values = [];
     for (let i = 0; i < iterations; i++) {
       const randomizer = Randomize[algorithm as keyof typeof Randomize];
-      newValues.push([randomizer(0, 1), randomizer(0, 1)]);
+      newValues.push([randomizer(), randomizer()]);
     }
-    console.log("Randomized, new values:", newValues);
     setValues(newValues);
   };
 
   useEffect(() => {
     randomize();
     register();
-  }, []);
+  }, [randomize]);
 
   return (
     <Layout.Root>
-      <Layout.Header>
+      <Layout.Sidebar>
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            gap: 1.5,
-          }}
-        >
-          <IconButton
-            size="sm"
-            variant="solid"
-            sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
-          >
-            <FiTarget />
-          </IconButton>
-          <Typography component="h1" fontWeight="xl">
-            RNG
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
+            justifyContent: 'flex-end',
+            width: '100%',
             gap: 4,
           }}
         >
@@ -96,7 +78,8 @@ export default function Simulation() {
             </Button>
           </Badge>
         </Box>
-      </Layout.Header>
+        <CodeView code={randomize.toString()} />
+      </Layout.Sidebar>
       <Layout.Main>
         <ScatterView values={values} />
         <HeatmapView values={values} />

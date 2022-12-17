@@ -11,7 +11,7 @@ export default function ScatterView({
   const { systemMode } = useColorScheme();
 
   return (
-    <Layout.Tile>
+    <Layout.Tile sx={{height: "600px"}}>
       <ReactECharts
         option={{
           tooltip: {},
@@ -27,7 +27,7 @@ export default function ScatterView({
           ]
         }}
         lazyUpdate
-        style={{ height: 'min(600px, 100%)', width: 'min(600px, 100%)' }}
+        style={{ height: '100%', width: '100%' }}
         theme={systemMode}
       />
     </Layout.Tile>

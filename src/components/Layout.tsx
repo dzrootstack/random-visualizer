@@ -1,35 +1,31 @@
 import React from 'react';
 import Box, { BoxProps } from '@mui/joy/Box';
 import { Card, CardProps } from '@mui/joy';
-import { Desktop, Mobile } from '../utils/Responsive';
+import { Default, Mobile } from '../utils/Responsive';
 
 function Root(props: BoxProps) {
   return (
     <>
-      <Desktop>
+      <Default>
         <Box
           sx={{
             display: 'grid',
-            gridTemplateRows: 'auto 1fr',
+            gridTemplateColumns: '50% 50%',
             gridTemplateAreas: `
-          "navbar"
-          "main"
-        `,
+            "sidebar main"
+          `,
             height: '100vh',
           }}
           {...props}
         />
-      </Desktop>
+      </Default>
       <Mobile>
         <Box
           sx={{
-            display: 'grid',
-            gridTemplateRows: 'auto 1fr',
-            gridTemplateAreas: `
-          "navbar"
-          "main"
-        `,
+            display: 'flex',
+            flexDirection: 'column',
             height: '100vh',
+            overflow: "auto"
           }}
           {...props}
         />
@@ -38,21 +34,39 @@ function Root(props: BoxProps) {
   );
 }
 
-function Header(props: BoxProps) {
+function Sidebar(props: BoxProps) {
   return (
-    <Box
-      sx={{
-        gridArea: 'navbar',
-        bgcolor: 'background.surface',
-        color: 'primary.contrastText',
-        justifyContent: 'space-between',
-        display: 'flex',
-        alignItems: 'center',
-        p: 2,
-        gap: 2,
-      }}
-      {...props}
-    />
+    <>
+      <Default>
+        <Box
+          sx={{
+            gridArea: 'sidebar',
+            bgcolor: 'background.surface',
+            color: 'text.primary',
+            display: 'flex',
+            flexDirection: 'column',
+            p: 2,
+            gap: 2,
+          }}
+          {...props}
+        />
+      </Default>
+      <Mobile>
+        <Box
+          sx={{
+            gridArea: 'sidebar',
+            bgcolor: 'background.surface',
+            color: 'text.primary',
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            p: 2,
+            gap: 2,
+          }}
+          {...props}
+        />
+      </Mobile>
+    </>
   );
 }
 
@@ -65,9 +79,10 @@ function Main(props: BoxProps) {
         bgcolor: 'background.default',
         color: 'text.primary',
         display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
+        flexDirection: 'column',
+        overflowY: 'auto',
         p: 2,
+        gap: 2,
       }}
       {...props}
     />
@@ -82,10 +97,9 @@ function Tile(props: CardProps) {
         m: 2,
         bgcolor: 'background.surface',
         color: 'text.primary',
-        flexGrow: 1,
-        flexShrink: 0,
         justifyContent: 'center',
         alignItems: 'center',
+        width: "100%",
       }}
       {...props}
     />
@@ -94,7 +108,7 @@ function Tile(props: CardProps) {
 
 const Layout = {
   Root,
-  Header,
+  Sidebar,
   Tile,
   Main,
 };

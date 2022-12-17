@@ -1,4 +1,4 @@
-function gaussian(mean: number, stdDev: number) {
+function gaussian(mean: number = 0, stdDev: number = 1): number {
   let u = 0, v = 0;
   while (u === 0) u = Math.random(); //Converting [0,1) to (0,1)
   while (v === 0) v = Math.random();
@@ -8,18 +8,13 @@ function gaussian(mean: number, stdDev: number) {
   return num;
 }
 
-function uniform(min: number, max: number) {
-  return Math.random() * (max - min) + min;
-}
-
-function normal(min: number, max: number) {
+function uniform(min: number = -1, max: number = 1): number {
   return Math.random() * (max - min) + min;
 }
 
 const Randomize = {
   gaussian,
   uniform,
-  normal,
 };
 
 export default Randomize;

@@ -10,7 +10,7 @@ export default function HeatmapView({
 }) {
   const { systemMode } = useColorScheme();
   return (
-    <Layout.Tile>
+    <Layout.Tile sx={{height: "600px"}}>
       <ReactECharts
         option={{
           tooltip: {},
@@ -18,7 +18,7 @@ export default function HeatmapView({
           yAxis: [{}],
           series: [
             {
-              type: 'heatmap',
+              type: 'scatter',
               data: values,
               dimensions: ['x', 'y'],
               blendMode: 'source-over',
@@ -26,7 +26,7 @@ export default function HeatmapView({
           ]
         }}
         lazyUpdate
-        style={{ height: '600px', width: '600px' }}
+        style={{ height: '100%', width: '100%' }}
         theme={systemMode}
       />
     </Layout.Tile>
