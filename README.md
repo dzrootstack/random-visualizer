@@ -1,2 +1,2 @@
-# gaussian-rng
-A basic gaussian random number generator with modern visualisations 
+# RNG
+A basic random number generator with modern visualisations 
