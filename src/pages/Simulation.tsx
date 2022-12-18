@@ -5,7 +5,7 @@ import { TbRepeat } from 'react-icons/tb';
 import { register } from '../utils/themes/charts/Dark';
 import Layout from '../components/Layout';
 import ScatterView from '../components/ScatterView';
-import HeatmapView from '../components/HeatmapView';
+import ScoreView from '../components/ScoreView';
 import Randomize from '../utils/Randomize';
 import CodeView from '../components/CodeView';
 
@@ -24,9 +24,15 @@ export default function Simulation() {
   };
 
   useEffect(() => {
-    randomize();
+    const newValues: typeof values = [];
+    for (let i = 0; i < iterations; i++) {
+      const randomizer = Randomize[algorithm as keyof typeof Randomize];
+      newValues.push([randomizer(), randomizer()]);
+    }
+    setValues(newValues);
+    
     register();
-  }, [randomize]);
+  }, [iterations, algorithm]);
 
   return (
     <Layout.Root>
@@ -36,7 +42,7 @@ export default function Simulation() {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'flex-end',
+            justifyContent: 'space-between',
             width: '100%',
             gap: 4,
           }}
@@ -78,11 +84,11 @@ export default function Simulation() {
             </Button>
           </Badge>
         </Box>
-        <CodeView code={randomize.toString()} />
+        <CodeView code={Randomize[algorithm as keyof typeof Randomize].toString()} />
       </Layout.Sidebar>
       <Layout.Main>
         <ScatterView values={values} />
-        <HeatmapView values={values} />
+        <ScoreView values={values} />
       </Layout.Main>
     </Layout.Root>
   );

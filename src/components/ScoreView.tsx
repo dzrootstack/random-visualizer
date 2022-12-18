@@ -3,12 +3,13 @@ import Layout from './Layout';
 import ReactECharts from 'echarts-for-react';
 import { useColorScheme } from '@mui/joy';
 
-export default function HeatmapView({
+export default function ScoreView({
   values,
 }: {
   values: [number, number][];
 }) {
   const { systemMode } = useColorScheme();
+  
   return (
     <Layout.Tile sx={{height: "600px"}}>
       <ReactECharts

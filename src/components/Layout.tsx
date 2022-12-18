@@ -34,11 +34,11 @@ function Root(props: BoxProps) {
   );
 }
 
-function Sidebar(props: BoxProps) {
+function Sidebar(props: CardProps) {
   return (
     <>
       <Default>
-        <Box
+        <Card
           sx={{
             gridArea: 'sidebar',
             bgcolor: 'background.surface',
@@ -46,13 +46,15 @@ function Sidebar(props: BoxProps) {
             display: 'flex',
             flexDirection: 'column',
             p: 2,
+            m: 2,
+            mr: 0,
             gap: 2,
           }}
           {...props}
         />
       </Default>
       <Mobile>
-        <Box
+        <Card
           sx={{
             gridArea: 'sidebar',
             bgcolor: 'background.surface',
@@ -61,6 +63,8 @@ function Sidebar(props: BoxProps) {
             flexDirection: 'row',
             flexWrap: 'wrap',
             p: 2,
+            m: 2,
+            mr: 0,
             gap: 2,
           }}
           {...props}
