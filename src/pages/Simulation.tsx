@@ -1,39 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import { Badge, Box, Button,  Select, Option, Slider } from '@mui/joy';
-import { TbRepeat } from 'react-icons/tb';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Badge, Box, Button, Select, Option, Slider } from '@mui/joy';
+import { TiCogOutline } from 'react-icons/ti';
 
 import { register } from '../utils/themes/charts/Dark';
 import Layout from '../components/Layout';
-import ScatterView from '../components/ScatterView';
-import VolumeView from '../components/VolumeView';
+import ScatterView from '../components/view/ScatterView';
+import VolumeView from '../components/view/VolumeView';
 import Random from '../utils/Random';
-import CodeView from '../components/CodeView';
+import CodeView from '../components/sidebar/CodeView';
+import ChatDescription from '../components/sidebar/ChatDescription';
+import Formula from '../components/sidebar/Formula';
 
 export default function Simulation() {
-  const [values, setValues] = useState<[number, number][]>([]);
+  const [result, setResult] = useState<{
+    values: [number, number][];
+    algorithm: string;
+  }>({
+    values: [],
+    algorithm: Object.keys(Random)[0],
+  })
   const [points, setPoints] = useState(1000);
   const [algorithm, setAlgorithm] = useState<string>(Object.keys(Random)[0]);
 
   register();
 
-  const randomize = () => {
-    const newValues: typeof values = [];
-    for (let i = 0; i < points; i++) {
-      const randomizer = Random[algorithm as keyof typeof Random].generate;
-      newValues.push([randomizer(), randomizer()]);
+  const randomize = useCallback(
+    () => {
+      const newValues: [number, number][] = [];
+      for (let i = 0; i < points; i++) {
+        const randomizer = Random[algorithm as keyof typeof Random].generate;
+        newValues.push([randomizer(), randomizer()]);
+      }
+      setResult({
+        values: newValues,
+        algorithm,
+      });
     }
-    setValues(newValues);
-  };
+    , [points, algorithm]
+  );
+  
 
   useEffect(() => {
-    const newValues: typeof values = [];
-    for (let i = 0; i < points; i++) {
-      const randomizer = Random[algorithm as keyof typeof Random].generate;
-      newValues.push([randomizer(), randomizer()]);
+    if (!result.values.length) {
+      randomize();
     }
-    setValues(newValues);
 
-  }, [points, algorithm]);
+  }, [points, algorithm, result, randomize]);
 
   return (
     <Layout.Root>
@@ -49,53 +61,51 @@ export default function Simulation() {
             gap: 4,
           }}
         >
-          <Box sx={{gap: 2}}>
-          <Select
-            defaultValue={0}
-            onChange={(_, value) => setAlgorithm(Object.keys(Random)[value as number])}
-          >
-            {Object.entries(Random).map(([key, value], index) => (
-              <Option key={key} value={index}>
-                {`${key} distribution`}
-              </Option>
-            ))}
-          </Select>
-          <Box sx={{ width: 300 }}>
-            <Slider
-              aria-label="points"
-              defaultValue={points}
-              min={250}
-              max={2000}
-              step={250}
-              onChange={(_, value) => setPoints(value as number)}
-              valueLabelDisplay="auto"
-              valueLabelFormat={(value) => `${value} points`}
-              marks={[
-                { value: 250, label: '250' },
-                { value: 500, label: '500' },
-                { value: 1000, label: '1000' },
-                { value: 2000, label: '2000' },
-              ]}
-            />
+          <Box sx={{ gap: 2 }}>
+            <Select
+              defaultValue={0}
+              onChange={(_, value) => setAlgorithm(Object.keys(Random)[value as number])}
+            >
+              {Object.values(Random).map((value, index) => (
+                <Option key={value.name} value={index}>
+                  {`${value.name} distribution`}
+                </Option>
+              ))}
+            </Select>
+            <Box sx={{ width: 300 }}>
+              <Slider
+                aria-label="points"
+                defaultValue={points}
+                min={250}
+                max={2000}
+                step={250}
+                onChange={(_, value) => setPoints(value as number)}
+                valueLabelDisplay="auto"
+                valueLabelFormat={(value) => `${value} points`}
+                marks={[
+                  { value: 250, label: '250' },
+                  { value: 500, label: '500' },
+                  { value: 1000, label: '1000' },
+                  { value: 2000, label: '2000' },
+                ]}
+              />
+            </Box>
           </Box>
-          </Box>
-        <Badge badgeContent={values.length === points ? 0 : ""}>
+          <Badge badgeContent={result.values.length === points && result.algorithm === algorithm ? 0 : ""}>
             <Button
-              startDecorator={<TbRepeat />}
               onClick={randomize}
             >
-              Randomize
+              Re-randomize
             </Button>
           </Badge>
         </Box>
         <CodeView code={Random[algorithm as keyof typeof Random].code} />
-        <Box>
-          {Random[algorithm as keyof typeof Random].description}
-        </Box>
+        <Formula algorithm={algorithm} />
+        <ChatDescription algorithm={algorithm}/>
       </Layout.Sidebar>
       <Layout.Main>
-        <ScatterView values={values} />
-        <VolumeView values={values} algorithm={algorithm}/>
+        <ScatterView values={result.values} />
+        <VolumeView values={result.values} algorithm={result.algorithm} />
       </Layout.Main>
     </Layout.Root>
   );

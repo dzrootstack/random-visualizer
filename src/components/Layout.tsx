@@ -9,7 +9,7 @@ function Root(props: BoxProps) {
     height: '100vh',
     width: '100vw',
   };
-  
+
   return (
     <>
       <Default>
@@ -44,37 +44,20 @@ function Root(props: BoxProps) {
 }
 
 function Sidebar(props: SheetProps) {
-  const sx = {
-    gridArea: 'sidebar',
-    bgcolor: 'background.surface',
-    color: 'text.primary',
-    display: 'flex',
-    p: 5,
-    gap: 5,
-  };
-  
   return (
-    <>
-      <Default>
-        <Sheet
-          sx={{
-            ...sx,
-            flexDirection: 'column',
-          }}
-          {...props}
-        />
-      </Default>
-      <Mobile>
-        <Sheet
-          sx={{
-            ...sx,
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-          }}
-          {...props}
-        />
-      </Mobile>
-    </>
+    <Sheet
+      sx={{
+        gridArea: 'sidebar',
+        bgcolor: 'background.surface',
+        color: 'text.primary',
+        display: 'flex',
+        p: 5,
+        gap: 5,
+        flexDirection: 'column',
+        overflowY: 'auto',
+      }}
+      {...props}
+    />
   );
 }
 

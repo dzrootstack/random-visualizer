@@ -7,6 +7,7 @@ export default function CodeView({ code }: { code: string }) {
   return (
     <SyntaxHighlighter language="javascript" style={vscDarkPlus} customStyle={{
       borderRadius: 8,
+      flexShrink: 0,
     }}>
       {code}
     </SyntaxHighlighter>

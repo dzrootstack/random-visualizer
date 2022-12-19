@@ -7,6 +7,7 @@ import {
 
 import appTheme from './utils/themes/app/Theme';
 import Simulation from './pages/Simulation';
+import './App.global.scss'
 
 export default function App() {
   return (

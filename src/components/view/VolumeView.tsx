@@ -1,9 +1,9 @@
 import React from 'react';
-import Layout from './Layout';
+import Layout from '../Layout';
 import ReactECharts from 'echarts-for-react';
 import { useColorScheme } from '@mui/joy';
-import Random from '../utils/Random';
-import { textColors } from '../utils/themes/charts/Dark';
+import Random from '../../utils/Random';
+import { textColors } from '../../utils/themes/charts/Dark';
 
 export default function VolumeView({
   values,
