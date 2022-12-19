@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Badge, Box, Button, Select, Option, Slider } from '@mui/joy';
-import { TiCogOutline } from 'react-icons/ti';
+import { Badge, Box, Button, Select, Option, Slider, Alert } from '@mui/joy';
+import {RxUpdate} from 'react-icons/rx';
 
 import { register } from '../utils/themes/charts/Dark';
 import Layout from '../components/Layout';
@@ -104,6 +104,16 @@ export default function Simulation() {
         <ChatDescription algorithm={algorithm}/>
       </Layout.Sidebar>
       <Layout.Main>
+        {
+          (result.values.length !== points || result.algorithm !== algorithm) && (
+            <Alert 
+            color="warning"
+            startDecorator={<RxUpdate/>}
+            >
+              Results are not up to date.
+            </Alert>
+          )
+        }
         <ScatterView values={result.values} />
         <VolumeView values={result.values} algorithm={result.algorithm} />
       </Layout.Main>
