@@ -23,7 +23,7 @@ export default function Formula({
         </Latex>
       </Typography>
       <Divider />
-      <Typography level="body1">
+      <Typography level="body1" component={'span'}>
         {Random[algorithm as keyof typeof Random].parameters.map((parameter) => (
           <Box key={parameter}>
             <Latex>

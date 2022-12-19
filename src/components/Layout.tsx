@@ -5,7 +5,6 @@ import { Default, Mobile } from '../utils/Responsive';
 
 function Root(props: BoxProps) {
   const sx = {
-    display: 'grid',
     height: '100vh',
     width: '100vw',
   };
@@ -16,6 +15,7 @@ function Root(props: BoxProps) {
         <Box
           sx={{
             ...sx,
+            display: 'grid',
             gridTemplateColumns: '50% 50%',
             gridTemplateRows: '100%',
             gridTemplateAreas: `
@@ -29,12 +29,8 @@ function Root(props: BoxProps) {
         <Box
           sx={{
             ...sx,
-            gridTemplateColumns: '100%',
-            gridTemplateRows: '50% 50%',
-            gridTemplateAreas: `
-            "sidebar"
-            "main"
-          `,
+            display: 'flex',
+            flexDirection: 'column',
           }}
           {...props}
         />
@@ -54,6 +50,7 @@ function Sidebar(props: SheetProps) {
         p: 5,
         gap: 5,
         flexDirection: 'column',
+        flexShrink: 0,
         overflowY: 'auto',
       }}
       {...props}
@@ -71,6 +68,7 @@ function Main(props: BoxProps) {
         color: 'text.primary',
         display: 'flex',
         flexDirection: 'column',
+        flexShrink: 0,
         gap: 2,
         p: 2,
       }}
@@ -85,10 +83,10 @@ function Tile(props: CardProps) {
       sx={{
         bgcolor: 'background.surface',
         color: 'text.primary',
-        justifyContent: 'center',
-        alignItems: 'center',
         width: "100%",
         height: "600px",
+        display: 'flex',
+        flexDirection: 'column',
         flexShrink: 0,
       }}
       {...props}

@@ -1,5 +1,6 @@
-import { Box, Divider, Typography } from '@mui/joy';
 import React from 'react';
+import { Box, Typography } from '@mui/joy';
+
 
 const Random: {
   [key: string]: {
@@ -42,7 +43,7 @@ const Random: {
         <Typography>
           The Gaussian distribution, also known as the normal distribution, is a continuous probability distribution that is symmetrical about the mean. It is often used to describe the probability of a given variable taking on a certain value or range of values.
         </Typography>
-        <Typography>
+        <Typography component={'span'}>
           The Gaussian distribution has several properties that make it useful for modeling data in many fields, including:
           <ul>
             <li>
@@ -94,7 +95,7 @@ const Random: {
         <Typography>
           The uniform distribution is a continuous probability distribution that has a constant probability over a given interval. It is often used to model situations where there is no inherent bias towards any particular value within the interval.
         </Typography>
-        <Typography>
+        <Typography component={'span'}>
           <ul>
             <li>
               The uniform distribution has several properties that make it useful for modeling certain types of data:

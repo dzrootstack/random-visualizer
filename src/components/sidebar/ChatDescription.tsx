@@ -42,7 +42,7 @@ export default function ChatDescription({
           gap: 1,
         }}>
           <Avatar color='primary' variant="solid">
-            <CiUser size="1.3rem" />
+            <CiUser size={20} />
           </Avatar>
           <Card variant='soft' sx={{
             p: 2,
@@ -58,10 +58,10 @@ export default function ChatDescription({
         }}>
           <Avatar color='success' variant="solid">
             {response ? (
-              <SiOpenai size="1.3rem" />
+              <SiOpenai size={20} />
             ) : (
               <CircularProgress>
-                <SiOpenai size="1.3rem" />
+                <SiOpenai size={20} />
               </CircularProgress>
             )}
           </Avatar>
