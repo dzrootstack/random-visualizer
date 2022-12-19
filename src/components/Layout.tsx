@@ -1,20 +1,26 @@
 import React from 'react';
 import Box, { BoxProps } from '@mui/joy/Box';
-import { Card, CardProps } from '@mui/joy';
+import { Card, CardProps, Sheet, SheetProps } from '@mui/joy';
 import { Default, Mobile } from '../utils/Responsive';
 
 function Root(props: BoxProps) {
+  const sx = {
+    display: 'grid',
+    height: '100vh',
+    width: '100vw',
+  };
+  
   return (
     <>
       <Default>
         <Box
           sx={{
-            display: 'grid',
+            ...sx,
             gridTemplateColumns: '50% 50%',
+            gridTemplateRows: '100%',
             gridTemplateAreas: `
             "sidebar main"
           `,
-            height: '100vh',
           }}
           {...props}
         />
@@ -22,10 +28,13 @@ function Root(props: BoxProps) {
       <Mobile>
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100vh',
-            overflow: "auto"
+            ...sx,
+            gridTemplateColumns: '100%',
+            gridTemplateRows: '50% 50%',
+            gridTemplateAreas: `
+            "sidebar"
+            "main"
+          `,
           }}
           {...props}
         />
@@ -34,38 +43,33 @@ function Root(props: BoxProps) {
   );
 }
 
-function Sidebar(props: CardProps) {
+function Sidebar(props: SheetProps) {
+  const sx = {
+    gridArea: 'sidebar',
+    bgcolor: 'background.surface',
+    color: 'text.primary',
+    display: 'flex',
+    p: 2,
+    gap: 2,
+  };
+  
   return (
     <>
       <Default>
-        <Card
+        <Sheet
           sx={{
-            gridArea: 'sidebar',
-            bgcolor: 'background.surface',
-            color: 'text.primary',
-            display: 'flex',
+            ...sx,
             flexDirection: 'column',
-            p: 2,
-            m: 2,
-            mr: 0,
-            gap: 2,
           }}
           {...props}
         />
       </Default>
       <Mobile>
-        <Card
+        <Sheet
           sx={{
-            gridArea: 'sidebar',
-            bgcolor: 'background.surface',
-            color: 'text.primary',
-            display: 'flex',
+            ...sx,
             flexDirection: 'row',
             flexWrap: 'wrap',
-            p: 2,
-            m: 2,
-            mr: 0,
-            gap: 2,
           }}
           {...props}
         />
@@ -79,14 +83,13 @@ function Main(props: BoxProps) {
     <Box
       sx={{
         gridArea: 'main',
-        overflow: 'auto',
+        overflowY: 'auto',
         bgcolor: 'background.default',
         color: 'text.primary',
         display: 'flex',
         flexDirection: 'column',
-        overflowY: 'auto',
-        p: 2,
         gap: 2,
+        p: 2,
       }}
       {...props}
     />
@@ -97,13 +100,13 @@ function Tile(props: CardProps) {
   return (
     <Card
       sx={{
-        p: 2,
-        m: 2,
         bgcolor: 'background.surface',
         color: 'text.primary',
         justifyContent: 'center',
         alignItems: 'center',
         width: "100%",
+        height: "600px",
+        flexShrink: 0,
       }}
       {...props}
     />

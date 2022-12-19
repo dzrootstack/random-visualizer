@@ -11,25 +11,25 @@ export default function ScatterView({
   const { systemMode } = useColorScheme();
 
   return (
-    <Layout.Tile sx={{height: "600px"}}>
-      <ReactECharts
-        option={{
-          tooltip: {},
-          xAxis: [{}],
-          yAxis: [{}],
-          series: [
-            {
-              type: 'scatter',
-              data: values,
-              dimensions: ['x', 'y'],
-              blendMode: 'source-over',
-            }
-          ]
-        }}
-        lazyUpdate
-        style={{ height: '100%', width: '100%' }}
-        theme={systemMode}
-      />
+    <Layout.Tile>
+        <ReactECharts
+          option={{
+            tooltip: {},
+            xAxis: [{}],
+            yAxis: [{}],
+            series: [
+              {
+                type: 'scatter',
+                data: values,
+                dimensions: ['x', 'y'],
+                blendMode: 'source-over',
+              }
+            ]
+          }}
+          lazyUpdate
+          style={{ height: '100%', width: '100%' }}
+          theme={systemMode}
+        />
     </Layout.Tile>
   );
 }

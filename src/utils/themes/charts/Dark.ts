@@ -1,5 +1,10 @@
 import * as echarts from 'echarts';
 
+export const textColors = {
+    light: '#000000',
+    dark: '#ffffff',
+};
+
 export function register() {
     echarts.registerTheme('dark', {
         "color": [

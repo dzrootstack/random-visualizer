@@ -5,19 +5,19 @@ import { TbRepeat } from 'react-icons/tb';
 import { register } from '../utils/themes/charts/Dark';
 import Layout from '../components/Layout';
 import ScatterView from '../components/ScatterView';
-import ScoreView from '../components/ScoreView';
-import Randomize from '../utils/Randomize';
+import ProbabilityView from '../components/ProbabilityView';
+import Random from '../utils/Random';
 import CodeView from '../components/CodeView';
 
 export default function Simulation() {
   const [values, setValues] = useState<[number, number][]>([]);
-  const [iterations, setIterations] = useState(1000);
-  const [algorithm, setAlgorithm] = useState<string>(Object.keys(Randomize)[0]);
+  const [points, setPoints] = useState(1000);
+  const [algorithm, setAlgorithm] = useState<string>(Object.keys(Random)[0]);
 
   const randomize = () => {
     const newValues: typeof values = [];
-    for (let i = 0; i < iterations; i++) {
-      const randomizer = Randomize[algorithm as keyof typeof Randomize];
+    for (let i = 0; i < points; i++) {
+      const randomizer = Random[algorithm as keyof typeof Random];
       newValues.push([randomizer(), randomizer()]);
     }
     setValues(newValues);
@@ -25,14 +25,14 @@ export default function Simulation() {
 
   useEffect(() => {
     const newValues: typeof values = [];
-    for (let i = 0; i < iterations; i++) {
-      const randomizer = Randomize[algorithm as keyof typeof Randomize];
+    for (let i = 0; i < points; i++) {
+      const randomizer = Random[algorithm as keyof typeof Random];
       newValues.push([randomizer(), randomizer()]);
     }
     setValues(newValues);
-    
+
     register();
-  }, [iterations, algorithm]);
+  }, [points, algorithm]);
 
   return (
     <Layout.Root>
@@ -41,17 +41,18 @@ export default function Simulation() {
           sx={{
             display: 'flex',
             flexDirection: 'row',
+            flexWrap: 'wrap',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'center',
             width: '100%',
-            gap: 4,
+            gap: 3,
           }}
         >
           <Select
             defaultValue={0}
-            onChange={(_, value) => setAlgorithm(Object.keys(Randomize)[value as number])}
+            onChange={(_, value) => setAlgorithm(Object.keys(Random)[value as number])}
           >
-            {Object.entries(Randomize).map(([key, value], index) => (
+            {Object.entries(Random).map(([key, value], index) => (
               <Option key={key} value={index}>
                 {`${key} distribution`}
               </Option>
@@ -59,36 +60,36 @@ export default function Simulation() {
           </Select>
           <Box sx={{ width: 300 }}>
             <Slider
-              aria-label="Iterations"
-              defaultValue={iterations}
-              min={0}
+              aria-label="points"
+              defaultValue={points}
+              min={250}
               max={2000}
               step={250}
-              onChange={(_, value) => setIterations(value as number)}
+              onChange={(_, value) => setPoints(value as number)}
               valueLabelDisplay="auto"
+              valueLabelFormat={(value) => `${value} points`}
               marks={[
-                { value: 0, label: '0' },
+                { value: 250, label: '250' },
                 { value: 500, label: '500' },
                 { value: 1000, label: '1000' },
                 { value: 2000, label: '2000' },
               ]}
             />
           </Box>
-          <Badge badgeContent={values.length === iterations ? 0 : ""}>
+        </Box>
+        <CodeView code={Random[algorithm as keyof typeof Random].toString()} />
+        <Badge badgeContent={values.length === points ? 0 : ""}>
             <Button
-              size="sm"
               startDecorator={<TbRepeat />}
               onClick={randomize}
             >
               Randomize
             </Button>
           </Badge>
-        </Box>
-        <CodeView code={Randomize[algorithm as keyof typeof Randomize].toString()} />
       </Layout.Sidebar>
       <Layout.Main>
         <ScatterView values={values} />
-        <ScoreView values={values} />
+        <ProbabilityView values={values} />
       </Layout.Main>
     </Layout.Root>
   );

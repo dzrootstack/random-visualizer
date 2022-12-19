@@ -1,26 +1,15 @@
 import React, { createRef, useEffect, useState } from "react";
-import hljs from 'highlight.js';
-import javascript from 'highlight.js/lib/languages/javascript';
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-export default function CodeView({code}: {code: string}) {
-  const [codeRef] = useState(createRef<HTMLPreElement>)
-  
-  useEffect(() => {
-    hljs.registerLanguage('javascript', javascript);
-  }, []);
-  
-  // display the code with syntax highlighting using highlight.js
-  useEffect(() => {
-    codeRef && codeRef.current && hljs.highlightElement(codeRef.current);
-  }
-  , [codeRef]);
+export default function CodeView({ code }: { code: string }) {
 
   return (
-    <pre ref={codeRef}>
-      <code className="javascript">
-        {code}
-      </code>
-    </pre>
+    <SyntaxHighlighter language="javascript" style={vscDarkPlus} customStyle={{
+      borderRadius: 8,
+    }}>
+      {code}
+    </SyntaxHighlighter>
   );
 }
 
