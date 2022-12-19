@@ -49,8 +49,8 @@ function Sidebar(props: SheetProps) {
     bgcolor: 'background.surface',
     color: 'text.primary',
     display: 'flex',
-    p: 2,
-    gap: 2,
+    p: 5,
+    gap: 5,
   };
   
   return (

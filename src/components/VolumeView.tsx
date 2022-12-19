@@ -2,13 +2,15 @@ import React from 'react';
 import Layout from './Layout';
 import ReactECharts from 'echarts-for-react';
 import { useColorScheme } from '@mui/joy';
-import { gaussianProbability } from '../utils/Random';
+import Random from '../utils/Random';
 import { textColors } from '../utils/themes/charts/Dark';
 
-export default function ProbabilityView({
+export default function VolumeView({
   values,
+  algorithm,
 }: {
   values: [number, number][];
+  algorithm: keyof typeof Random;
 }) {
   const { systemMode } = useColorScheme();
 
@@ -77,7 +79,7 @@ export default function ProbabilityView({
                   min: -3,
                   max: 3
                 },
-                z: gaussianProbability
+                z: Random[algorithm].probability
               },
               itemStyle: {
                 opacity: 0.3
@@ -87,7 +89,7 @@ export default function ProbabilityView({
               type: 'scatter3D',
               name: 'Samples',
               symbolSize: 5,
-              data: values.map(([x, y]) => [x, y, gaussianProbability(x, y)]),
+              data: values.map(([x, y]) => [x, y, Random[algorithm].probability(x, y)]),
               dimensions: ['x', 'y', 'z'],
             }
           ]

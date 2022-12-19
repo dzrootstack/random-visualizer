@@ -5,7 +5,7 @@ import { TbRepeat } from 'react-icons/tb';
 import { register } from '../utils/themes/charts/Dark';
 import Layout from '../components/Layout';
 import ScatterView from '../components/ScatterView';
-import ProbabilityView from '../components/ProbabilityView';
+import VolumeView from '../components/VolumeView';
 import Random from '../utils/Random';
 import CodeView from '../components/CodeView';
 
@@ -14,10 +14,12 @@ export default function Simulation() {
   const [points, setPoints] = useState(1000);
   const [algorithm, setAlgorithm] = useState<string>(Object.keys(Random)[0]);
 
+  register();
+
   const randomize = () => {
     const newValues: typeof values = [];
     for (let i = 0; i < points; i++) {
-      const randomizer = Random[algorithm as keyof typeof Random];
+      const randomizer = Random[algorithm as keyof typeof Random].generate;
       newValues.push([randomizer(), randomizer()]);
     }
     setValues(newValues);
@@ -26,12 +28,11 @@ export default function Simulation() {
   useEffect(() => {
     const newValues: typeof values = [];
     for (let i = 0; i < points; i++) {
-      const randomizer = Random[algorithm as keyof typeof Random];
+      const randomizer = Random[algorithm as keyof typeof Random].generate;
       newValues.push([randomizer(), randomizer()]);
     }
     setValues(newValues);
 
-    register();
   }, [points, algorithm]);
 
   return (
@@ -45,9 +46,10 @@ export default function Simulation() {
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
-            gap: 3,
+            gap: 4,
           }}
         >
+          <Box sx={{gap: 2}}>
           <Select
             defaultValue={0}
             onChange={(_, value) => setAlgorithm(Object.keys(Random)[value as number])}
@@ -76,8 +78,7 @@ export default function Simulation() {
               ]}
             />
           </Box>
-        </Box>
-        <CodeView code={Random[algorithm as keyof typeof Random].toString()} />
+          </Box>
         <Badge badgeContent={values.length === points ? 0 : ""}>
             <Button
               startDecorator={<TbRepeat />}
@@ -86,10 +87,15 @@ export default function Simulation() {
               Randomize
             </Button>
           </Badge>
+        </Box>
+        <CodeView code={Random[algorithm as keyof typeof Random].code} />
+        <Box>
+          {Random[algorithm as keyof typeof Random].description}
+        </Box>
       </Layout.Sidebar>
       <Layout.Main>
         <ScatterView values={values} />
-        <ProbabilityView values={values} />
+        <VolumeView values={values} algorithm={algorithm}/>
       </Layout.Main>
     </Layout.Root>
   );

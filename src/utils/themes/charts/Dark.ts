@@ -1,4 +1,4 @@
-import * as echarts from 'echarts';
+import { registerTheme } from 'echarts';
 
 export const textColors = {
     light: '#000000',
@@ -6,7 +6,7 @@ export const textColors = {
 };
 
 export function register() {
-    echarts.registerTheme('dark', {
+    registerTheme('dark', {
         "color": [
             "#fc97af",
             "#87f7cf",
