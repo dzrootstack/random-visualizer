@@ -83,7 +83,7 @@ export default function Simulation() {
             <Box sx={{ width: 300 }}>
               <Slider
                 aria-label="points"
-                defaultValue={points}
+                value={points}
                 min={250}
                 max={2000}
                 step={250}
