@@ -30,8 +30,8 @@ export default function View({
         <Card
           variant='outlined'
           sx={{
-            width: "min(100%, 900px)",
-            height: "min(100%, 900px)",
+            width: "min(95%, 900px)",
+            height: "min(95%, 900px)",
             boxShadow: "lg"
           }}
         >

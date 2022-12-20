@@ -20,12 +20,33 @@ export default function ScatterView({
       <ReactECharts
         option={{
           tooltip: {},
+          visualMap: {
+            show: false,
+            dimension: 2,
+            min: 0,
+            max: Math.max(...values.map(([x, y]) => x ** 2 + y ** 2)),
+            inRange: {
+              color: [
+                '#a50026',
+                '#d73027',
+                '#f46d43',
+                '#fdae61',
+                '#fee090',
+                '#ffffbf',
+                '#e0f3f8',
+                '#abd9e9',
+                '#74add1',
+                '#4575b4',
+                '#313695',
+              ]
+            }
+          },
           xAxis: [{}],
           yAxis: [{}],
           series: [
             {
               type: 'scatter',
-              data: values,
+              data: values.map(([x, y]) => [x, y, x ** 2 + y ** 2]),
               dimensions: ['x', 'y'],
               blendMode: 'source-over',
             }
