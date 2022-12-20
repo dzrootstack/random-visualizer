@@ -4,6 +4,7 @@ import ReactECharts from 'echarts-for-react';
 import { CardOverflow, Divider, Typography, useColorScheme } from '@mui/joy';
 import Random from '../../utils/Random';
 import { textColors } from '../../utils/themes/charts/Dark';
+import View from './View';
 
 export default function DensityBarView({
   values,
@@ -26,7 +27,7 @@ export default function DensityBarView({
       y: [Math.floor(Math.min(...y)), Math.ceil(Math.max(...y))],
     };
   }, [values]);
-  
+
   const data: Map<string, number> = useMemo(() => {
     const data = new Map<string, number>();
     for (let x = bbox.x[0]; x <= bbox.x[1]; x += resolution) {
@@ -43,11 +44,16 @@ export default function DensityBarView({
     }
     return data;
   }, [bbox, algorithm, resolution, values]);
-  
+
   return (
-    <Layout.Tile>
+    <View
+      info={`${values.length} points`}
+      title="Three-dimensional surface plot"
+      description='This chart is a three-dimensional surface plot of the density of points in the plane. The closer to red the color, the more points are in the cell, and the closer to blue, the scarcer they are.'
+    >
       <ReactECharts
         option={{
+
           tooltip: {},
           visualMap: {
             show: false,
@@ -126,24 +132,6 @@ export default function DensityBarView({
         style={{ height: '100%', width: '100%' }}
         theme={systemMode}
       />
-      <CardOverflow
-        variant="soft"
-        sx={{
-          display: 'flex',
-          gap: 1.5,
-          py: 1.5,
-          px: 2,
-          bgcolor: 'background.level1',
-        }}
-      >
-        <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
-          {values.length} points
-        </Typography>
-        <Divider orientation="vertical" />
-        <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
-          Three-dimensional surface plot
-        </Typography>
-      </CardOverflow>
-    </Layout.Tile>
+    </View>
   );
 }

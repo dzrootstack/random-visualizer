@@ -4,6 +4,7 @@ import ReactECharts from 'echarts-for-react';
 import { CardOverflow, Divider, Typography, useColorScheme } from '@mui/joy';
 import Random from '../../utils/Random';
 import { textColors } from '../../utils/themes/charts/Dark';
+import View from './View';
 
 export default function DensityBarView({
   values,
@@ -46,7 +47,11 @@ export default function DensityBarView({
   }, [bbox, algorithm, resolution, values]);
   
   return (
-    <Layout.Tile>
+    <View 
+    info={`${values.length} points`} 
+    title="Three-dimensional surface plot"
+    description='This chart is a three-dimensional bar chart of the density of random points. The height of each bar is proportional to the number of points in the cell.'
+    >
       <ReactECharts
         option={{
           visualMap: {
@@ -120,24 +125,6 @@ export default function DensityBarView({
         style={{ height: '100%', width: '100%' }}
         theme={systemMode}
       />
-      <CardOverflow
-        variant="soft"
-        sx={{
-          display: 'flex',
-          gap: 1.5,
-          py: 1.5,
-          px: 2,
-          bgcolor: 'background.level1',
-        }}
-      >
-        <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
-          {values.length} points
-        </Typography>
-        <Divider orientation="vertical" />
-        <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
-          Three-dimensional bar chart
-        </Typography>
-      </CardOverflow>
-    </Layout.Tile>
+    </View>
   );
 }

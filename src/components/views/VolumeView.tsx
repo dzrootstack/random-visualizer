@@ -4,6 +4,7 @@ import ReactECharts from 'echarts-for-react';
 import { CardOverflow, Divider, Typography, useColorScheme } from '@mui/joy';
 import Random from '../../utils/Random';
 import { textColors } from '../../utils/themes/charts/Dark';
+import View from './View';
 
 export default function VolumeView({
   values,
@@ -28,14 +29,18 @@ export default function VolumeView({
   }, [values]);
   
   return (
-    <Layout.Tile>
+    <View 
+    info={`${values.length} points`} 
+    title="Three-dimensional surface plot"
+    description='This chart features a three-dimensional surface plot of the probability density function of the random variable, and a scatter plot of the generated points.'
+    >
       <ReactECharts
         option={{
           tooltip: {},
           visualMap: {
             show: false,
             dimension: 2,
-            min: -1,
+            min: 0,
             max: 1,
             inRange: {
               color: [
@@ -117,24 +122,6 @@ export default function VolumeView({
         style={{ height: '100%', width: '100%' }}
         theme={systemMode}
       />
-      <CardOverflow
-        variant="soft"
-        sx={{
-          display: 'flex',
-          gap: 1.5,
-          py: 1.5,
-          px: 2,
-          bgcolor: 'background.level1',
-        }}
-      >
-        <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
-          {values.length} points
-        </Typography>
-        <Divider orientation="vertical" />
-        <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
-          Three-dimensional surface plot
-        </Typography>
-      </CardOverflow>
-    </Layout.Tile>
+    </View>
   );
 }

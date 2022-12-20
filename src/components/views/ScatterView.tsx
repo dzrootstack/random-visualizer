@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../Layout';
 import ReactECharts from 'echarts-for-react';
 import { CardOverflow, Divider, Typography, useColorScheme } from '@mui/joy';
+import View from './View';
 
 export default function ScatterView({
   values,
@@ -11,7 +12,11 @@ export default function ScatterView({
   const { systemMode } = useColorScheme();
 
   return (
-    <Layout.Tile>
+    <View
+      info={`${values.length} points`}
+      title="Two-dimensional scatter plot"
+      description="This chart features a two-dimensional scatter plot of the generated points. The points are colored according to their distance from the origin."
+    >
       <ReactECharts
         option={{
           tooltip: {},
@@ -30,24 +35,6 @@ export default function ScatterView({
         style={{ height: '100%', width: '100%' }}
         theme={systemMode}
       />
-      <CardOverflow
-        variant="soft"
-        sx={{
-          display: 'flex',
-          gap: 1.5,
-          py: 1.5,
-          px: 2,
-          bgcolor: 'background.level1',
-        }}
-      >
-        <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
-          {values.length} points
-        </Typography>
-        <Divider orientation="vertical" />
-        <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
-          Two-dimensional scatter plot
-        </Typography>
-      </CardOverflow>
-    </Layout.Tile >
+      </View>
   );
 }
