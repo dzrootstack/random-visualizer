@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import Layout from '../Layout';
 import ReactECharts from 'echarts-for-react';
 import { CardOverflow, Divider, Typography, useColorScheme } from '@mui/joy';
 import Random from '../../utils/Random';
 import { textColors } from '../../utils/themes/charts/Dark';
 
-export default function VolumeView({
+export default function DensityBarView({
   values,
   algorithm,
 }: {
@@ -13,7 +13,23 @@ export default function VolumeView({
   algorithm: keyof typeof Random;
 }) {
   const { systemMode } = useColorScheme();
+  const [resolution] = useState(0.2);
 
+  const [maxDensity, setMaxDensity] = useState(0);
+
+  const bbox = useMemo(() => {
+    if (!values.length) {
+      return { x: [0, 1], y: [0, 1] };
+    }
+    
+    const x = values.map(([x]) => x);
+    const y = values.map(([, y]) => y);
+    return {
+      x: [Math.floor(Math.min(...x)), Math.ceil(Math.max(...x))],
+      y: [Math.floor(Math.min(...y)), Math.ceil(Math.max(...y))],
+    };
+  }, [values]);
+  
   return (
     <Layout.Tile>
       <ReactECharts
@@ -22,8 +38,8 @@ export default function VolumeView({
           visualMap: {
             show: false,
             dimension: 2,
-            min: -1,
-            max: 1,
+            min: 0,
+            max: maxDensity,
             inRange: {
               color: [
                 '#313695',
@@ -42,18 +58,24 @@ export default function VolumeView({
           },
           xAxis3D: {
             type: 'value',
+            min: bbox.x[0],
+            max: bbox.x[1]
           },
           yAxis3D: {
-            type: 'value'
+            type: 'value',
+            min: bbox.y[0],
+            max: bbox.y[1]
           },
           zAxis3D: {
             type: 'value',
-            max: 1,
             splitNumber: 2
           },
           grid3D: {
             boxHeight: 40,
             axisLine: {
+              lineStyle: { color: textColors[systemMode as 'dark' | 'light'] },
+            },
+            splitLine: {
               lineStyle: { color: textColors[systemMode as 'dark' | 'light'] },
             },
             axisPointer: {
@@ -71,26 +93,28 @@ export default function VolumeView({
               equation: {
                 x: {
                   step: 0.1,
-                  min: -3,
-                  max: 3
+                  min: bbox.x[0],
+                  max: bbox.x[1]
                 },
                 y: {
                   step: 0.1,
-                  min: -3,
-                  max: 3
+                  min: bbox.y[0],
+                  max: bbox.y[1]
                 },
-                z: Random[algorithm].probability
-              },
-              itemStyle: {
-                opacity: 0.3
+                z: (x: number, y: number) => {
+                  // Count the number of points in the resolution square
+                  const count = values.reduce((acc, [x1, y1]) => {
+                    if (x1 >= x && x1 < x + resolution && y1 >= y && y1 < y + resolution) {
+                      return acc + 1;
+                    }
+                    return acc;
+                  }, 0);
+                  if (count > maxDensity) {
+                    setMaxDensity(count);
+                  }
+                  return count;
+                }
               }
-            },
-            {
-              type: 'scatter3D',
-              name: 'Samples',
-              symbolSize: 5,
-              data: values.map(([x, y]) => [x, y, Random[algorithm].probability(x, y)]),
-              dimensions: ['x', 'y', 'z'],
             }
           ]
         }}
@@ -113,7 +137,7 @@ export default function VolumeView({
         </Typography>
         <Divider orientation="vertical" />
         <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
-          Surface three-dimensional plot
+          Three-dimensional surface plot
         </Typography>
       </CardOverflow>
     </Layout.Tile>

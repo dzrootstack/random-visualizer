@@ -4,12 +4,14 @@ import {RxUpdate} from 'react-icons/rx';
 
 import { register } from '../utils/themes/charts/Dark';
 import Layout from '../components/Layout';
-import ScatterView from '../components/view/ScatterView';
-import VolumeView from '../components/view/VolumeView';
+import ScatterView from '../components/views/ScatterView';
+import VolumeView from '../components/views/VolumeView';
 import Random from '../utils/Random';
 import CodeView from '../components/sidebar/CodeView';
 import ChatDescription from '../components/sidebar/ChatDescription';
 import Formula from '../components/sidebar/Formula';
+import DensityBarView from '../components/views/DensityBarView';
+import DensitySurfaceView from '../components/views/DensitySurfaceView';
 
 export default function Simulation() {
   const [result, setResult] = useState<{
@@ -21,11 +23,13 @@ export default function Simulation() {
   })
   const [points, setPoints] = useState(1000);
   const [algorithm, setAlgorithm] = useState<string>(Object.keys(Random)[0]);
+  const [isLoading, setIsLoading] = useState(false);
 
   register();
 
   const randomize = useCallback(
-    () => {
+    async () => {
+      setIsLoading(true);
       const newValues: [number, number][] = [];
       for (let i = 0; i < points; i++) {
         const randomizer = Random[algorithm as keyof typeof Random].generate;
@@ -34,10 +38,14 @@ export default function Simulation() {
       setResult({
         values: newValues,
         algorithm,
-      });
+      })
     }
     , [points, algorithm]
   );
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [result]);
   
 
   useEffect(() => {
@@ -94,6 +102,7 @@ export default function Simulation() {
           <Badge badgeContent={result.values.length === points && result.algorithm === algorithm ? 0 : ""}>
             <Button
               onClick={randomize}
+              loading={isLoading}
             >
               Re-randomize
             </Button>
@@ -116,6 +125,8 @@ export default function Simulation() {
         }
         <ScatterView values={result.values} />
         <VolumeView values={result.values} algorithm={result.algorithm} />
+        <DensityBarView values={result.values} algorithm={result.algorithm} />
+        <DensitySurfaceView values={result.values} algorithm={result.algorithm} />
       </Layout.Main>
     </Layout.Root>
   );

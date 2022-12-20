@@ -1,8 +1,8 @@
 import { registerTheme } from 'echarts';
 
 export const textColors = {
-    light: '#000000',
-    dark: '#ffffff',
+    light: '#2f2f2f',
+    dark: '#8b8b8b',
 };
 
 export function register() {

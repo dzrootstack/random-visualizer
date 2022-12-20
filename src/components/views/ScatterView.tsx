@@ -45,7 +45,7 @@ export default function ScatterView({
         </Typography>
         <Divider orientation="vertical" />
         <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
-          Scatter two-dimensional plot
+          Two-dimensional scatter plot
         </Typography>
       </CardOverflow>
     </Layout.Tile >
