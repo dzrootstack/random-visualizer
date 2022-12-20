@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../Layout';
 import ReactECharts from 'echarts-for-react';
-import { AspectRatio, Box, CardOverflow, Divider, Typography, useColorScheme } from '@mui/joy';
+import { CardOverflow, Divider, Typography, useColorScheme } from '@mui/joy';
 
 export default function ScatterView({
   values,
@@ -11,9 +11,7 @@ export default function ScatterView({
   const { systemMode } = useColorScheme();
 
   return (
-    <Layout.Tile sx={{
-      mb: 0.5,
-    }}>
+    <Layout.Tile>
       <ReactECharts
         option={{
           tooltip: {},

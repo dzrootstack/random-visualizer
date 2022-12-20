@@ -15,9 +15,7 @@ export default function VolumeView({
   const { systemMode } = useColorScheme();
 
   return (
-    <Layout.Tile sx={{
-      mb: 0.5,
-    }}>
+    <Layout.Tile>
       <ReactECharts
         option={{
           tooltip: {},
