@@ -1,6 +1,8 @@
-import { Box, CardOverflow, Divider, IconButton, Link, Card, Modal, Tooltip, Typography, ModalClose } from '@mui/joy';
+import { Box, CardOverflow, Divider, IconButton, Link, Card, Modal, Tooltip, Typography, ModalClose, Button } from '@mui/joy';
 import React, { useState } from 'react';
 import { BsFullscreen } from 'react-icons/bs';
+import { GoBug, GoHeart } from 'react-icons/go';
+
 import Layout from '../Layout';
 
 export default function View({
@@ -53,6 +55,48 @@ export default function View({
               bgcolor: 'background.level1',
             }}
           >
+            <Box
+              sx={{
+                position: "absolute",
+                top: "0",
+                right: 20,
+                transform: "translateY(-50%)",
+                display: "flex",
+                flexDirection: "row",
+                gap: 1.5,
+              }}
+            >
+              <Link
+                href='https://github.com/BSoDium/rng/issues/new'
+                textColor='inherit'
+                underline='none'
+                target='_blank'
+              >
+                <Button
+                  color='warning'
+                  size="sm"
+                  startDecorator={<GoBug />}
+                  sx={{ boxShadow: "sm" }}
+                >
+                  Report Bug
+                </Button>
+              </Link>
+              <Link
+                href='https://github.com/sponsors/BSoDium'
+                textColor='inherit'
+                underline='none'
+                target='_blank'
+              >
+                <Button
+                  color='info'
+                  size="sm"
+                  startDecorator={<GoHeart />}
+                  sx={{ boxShadow: "sm" }}
+                >
+                  Donate
+                </Button>
+              </Link>
+            </Box>
             <Box sx={{ display: "flex", flexDirection: "row", gap: 1.5 }}>
               <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
                 {info}
@@ -71,18 +115,24 @@ export default function View({
         </Card>
       </Modal>
       <Layout.Tile>
-        <IconButton
-          variant="plain"
-          color='neutral'
-          onClick={() => setFocused(true)}
-          sx={{
-            position: "absolute",
-            top: 10,
-            right: 10,
-          }}
+        <Tooltip
+          placement="left"
+          variant='outlined'
+          title="Open interactive view"
         >
-          <BsFullscreen />
-        </IconButton>
+          <IconButton
+            variant="plain"
+            color='neutral'
+            onClick={() => setFocused(true)}
+            sx={{
+              position: "absolute",
+              top: 10,
+              right: 10,
+            }}
+          >
+            <BsFullscreen />
+          </IconButton>
+        </Tooltip>
         <Box sx={{
           height: "100%",
           width: "100%",
