@@ -15,13 +15,10 @@ export default function DensityBarView({
   const { systemMode } = useColorScheme();
   const [resolution] = useState(0.2);
 
-  const [maxDensity, setMaxDensity] = useState(0);
-
   const bbox = useMemo(() => {
     if (!values.length) {
       return { x: [0, 1], y: [0, 1] };
     }
-    
     const x = values.map(([x]) => x);
     const y = values.map(([, y]) => y);
     return {
@@ -29,6 +26,23 @@ export default function DensityBarView({
       y: [Math.floor(Math.min(...y)), Math.ceil(Math.max(...y))],
     };
   }, [values]);
+  
+  const data: Map<string, number> = useMemo(() => {
+    const data = new Map<string, number>();
+    for (let x = bbox.x[0]; x <= bbox.x[1]; x += resolution) {
+      for (let y = bbox.y[0]; y <= bbox.y[1]; y += resolution) {
+        // Count the number of points in the cell
+        const count = values.reduce((acc, [x1, y1]) => {
+          if (x1 >= x && x1 < x + resolution && y1 >= y && y1 < y + resolution) {
+            return acc + 1;
+          }
+          return acc;
+        }, 0);
+        data.set(`${x.toFixed(1)},${y.toFixed(1)}`, count);
+      }
+    }
+    return data;
+  }, [bbox, algorithm, resolution, values]);
   
   return (
     <Layout.Tile>
@@ -39,7 +53,7 @@ export default function DensityBarView({
             show: false,
             dimension: 2,
             min: 0,
-            max: maxDensity,
+            max: Math.max(...Array.from(data.values())),
             inRange: {
               color: [
                 '#313695',
@@ -92,27 +106,17 @@ export default function DensityBarView({
               shading: 'color',
               equation: {
                 x: {
-                  step: 0.1,
+                  step: resolution,
                   min: bbox.x[0],
                   max: bbox.x[1]
                 },
                 y: {
-                  step: 0.1,
+                  step: resolution,
                   min: bbox.y[0],
                   max: bbox.y[1]
                 },
                 z: (x: number, y: number) => {
-                  // Count the number of points in the resolution square
-                  const count = values.reduce((acc, [x1, y1]) => {
-                    if (x1 >= x && x1 < x + resolution && y1 >= y && y1 < y + resolution) {
-                      return acc + 1;
-                    }
-                    return acc;
-                  }, 0);
-                  if (count > maxDensity) {
-                    setMaxDensity(count);
-                  }
-                  return count;
+                  return data.get(`${x},${y}`) || 0;
                 }
               }
             }
