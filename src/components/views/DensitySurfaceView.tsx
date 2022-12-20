@@ -13,7 +13,8 @@ export default function DensityBarView({
   algorithm: keyof typeof Random;
 }) {
   const { systemMode } = useColorScheme();
-  const [resolution] = useState(0.2);
+  const [resolution] = useState(0.1);
+  const [cellSize] = useState(0.8);
 
   const bbox = useMemo(() => {
     if (!values.length) {
@@ -27,21 +28,25 @@ export default function DensityBarView({
     };
   }, [values]);
 
-  const data: Map<string, number> = useMemo(() => {
-    const data = new Map<string, number>();
+  // Compute the maximum value of the density for the graph (there is some redundancy which I have found 
+  // to be inevitable due to limitations when it comes to data loading in the echarts component)
+  const zMax: number = useMemo(() => {
+    let zMax = 0;
     for (let x = bbox.x[0]; x <= bbox.x[1]; x += resolution) {
       for (let y = bbox.y[0]; y <= bbox.y[1]; y += resolution) {
         // Count the number of points in the cell
         const count = values.reduce((acc, [x1, y1]) => {
-          if (x1 >= x && x1 < x + resolution && y1 >= y && y1 < y + resolution) {
+          if (x1 >= x && x1 < x + cellSize && y1 >= y && y1 < y + cellSize) {
             return acc + 1;
           }
           return acc;
         }, 0);
-        data.set(`${x.toFixed(1)},${y.toFixed(1)}`, count);
+        if (count > zMax) {
+          zMax = count;
+        }
       }
     }
-    return data;
+    return zMax;
   }, [bbox, resolution, values]);
 
   return (
@@ -58,7 +63,7 @@ export default function DensityBarView({
             show: false,
             dimension: 2,
             min: 0,
-            max: Math.max(...Array.from(data.values())),
+            max: zMax,
             inRange: {
               color: gradientColors
             }
@@ -109,7 +114,13 @@ export default function DensityBarView({
                   max: bbox.y[1]
                 },
                 z: (x: number, y: number) => {
-                  return data.get(`${x},${y}`) || 0;
+                  const count = values.reduce((acc, [x1, y1]) => {
+                    if (x1 >= x && x1 < x + cellSize && y1 >= y && y1 < y + cellSize) {
+                      return acc + 1;
+                    }
+                    return acc;
+                  }, 0);
+                  return count;
                 }
               }
             }

@@ -49,7 +49,7 @@ export default function DensityBarView({
     <View 
     info={`${values.length} points`} 
     title="Three-dimensional surface plot"
-    description='This chart is a three-dimensional bar chart of the density of random points. The height of each bar is proportional to the number of points in the cell.'
+    description='This is a three-dimensional bar chart of the density of random points. The height of each bar is proportional to the number of points in the cell.'
     >
       <ReactECharts
         option={{
@@ -90,7 +90,7 @@ export default function DensityBarView({
               main: {
                 shadow: true,
                 quality: 'ultra',
-                intensity: 1.5
+                intensity: 1
               }
             }
           },

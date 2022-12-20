@@ -68,7 +68,6 @@ export default function View({
             >
               <Link
                 href='https://github.com/BSoDium/rng/issues/new'
-                textColor='inherit'
                 underline='none'
                 target='_blank'
               >
@@ -83,7 +82,6 @@ export default function View({
               </Link>
               <Link
                 href='https://github.com/sponsors/BSoDium'
-                textColor='inherit'
                 underline='none'
                 target='_blank'
               >
@@ -107,7 +105,7 @@ export default function View({
               </Typography>
             </Box>
             {description && (
-              <Typography level="body3" noWrap sx={{ fontWeight: 'md', color: 'text.secondary' }}>
+              <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
                 {description}
               </Typography>
             )}

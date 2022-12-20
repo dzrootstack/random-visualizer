@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Badge, Box, Button, Select, Option, Slider, Alert } from '@mui/joy';
+import { Badge, Box, Button, Select, Option, Slider, Alert, Link } from '@mui/joy';
 import {RxUpdate} from 'react-icons/rx';
 
 import { register } from '../utils/themes/charts/Dark';
@@ -7,11 +7,12 @@ import Layout from '../components/Layout';
 import ScatterView from '../components/views/ScatterView';
 import VolumeView from '../components/views/VolumeView';
 import Random from '../utils/Random';
-import CodeView from '../components/sidebar/CodeView';
+import Code from '../components/sidebar/Code';
 import ChatDescription from '../components/sidebar/ChatDescription';
 import Formula from '../components/sidebar/Formula';
 import DensityBarView from '../components/views/DensityBarView';
 import DensitySurfaceView from '../components/views/DensitySurfaceView';
+import { FiGithub } from 'react-icons/fi';
 
 export default function Simulation() {
   const [result, setResult] = useState<{
@@ -57,6 +58,22 @@ export default function Simulation() {
 
   return (
     <Layout.Root>
+      <Link
+        href="https://github.com/BSoDium/randomite/fork"
+        underline="none"
+        target="_blank"
+        sx={{ position: "absolute", bottom: 20, right: 30, zIndex: 1000 }}
+      >
+        <Button
+          color="neutral"
+          variant='soft'
+          startDecorator={<FiGithub />}
+          sx={{ boxShadow: "md", borderRadius: 9999 }} 
+        >
+          Fork on GitHub
+        </Button>
+      </Link>
+      
       <Layout.Sidebar>
         <Box
           sx={{
@@ -108,7 +125,7 @@ export default function Simulation() {
             </Button>
           </Badge>
         </Box>
-        <CodeView code={Random[algorithm as keyof typeof Random].code} />
+        <Code code={Random[algorithm as keyof typeof Random].code} />
         <Formula algorithm={algorithm} />
         <ChatDescription algorithm={algorithm}/>
       </Layout.Sidebar>
