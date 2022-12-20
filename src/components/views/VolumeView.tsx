@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
-import Layout from '../Layout';
 import ReactECharts from 'echarts-for-react';
-import { CardOverflow, Divider, Typography, useColorScheme } from '@mui/joy';
+import { useColorScheme } from '@mui/joy';
 import Random from '../../utils/Random';
-import { textColors } from '../../utils/themes/charts/Dark';
+import { gradientColors, textColors } from '../../utils/themes/charts/Dark';
 import View from './View';
 
 export default function VolumeView({
@@ -19,7 +18,7 @@ export default function VolumeView({
     if (!values.length) {
       return { x: [0, 1], y: [0, 1] };
     }
-    
+
     const x = values.map(([x]) => x);
     const y = values.map(([, y]) => y);
     return {
@@ -27,12 +26,12 @@ export default function VolumeView({
       y: [Math.floor(Math.min(...y)), Math.ceil(Math.max(...y))],
     };
   }, [values]);
-  
+
   return (
-    <View 
-    info={`${values.length} points`} 
-    title="Three-dimensional surface plot"
-    description='This chart features a three-dimensional surface plot of the probability density function of the random variable, and a scatter plot of the generated points.'
+    <View
+      info={`${values.length} points`}
+      title="Three-dimensional surface plot"
+      description='This chart features a three-dimensional surface plot of the probability density function of the random variable, and a scatter plot of the generated points.'
     >
       <ReactECharts
         option={{
@@ -43,19 +42,7 @@ export default function VolumeView({
             min: 0,
             max: 1,
             inRange: {
-              color: [
-                '#313695',
-                '#4575b4',
-                '#74add1',
-                '#abd9e9',
-                '#e0f3f8',
-                '#ffffbf',
-                '#fee090',
-                '#fdae61',
-                '#f46d43',
-                '#d73027',
-                '#a50026'
-              ]
+              color: gradientColors
             }
           },
           xAxis3D: {
@@ -92,6 +79,7 @@ export default function VolumeView({
                 show: false
               },
               shading: 'color',
+              dimension: ['x', 'y', 'probability'],
               equation: {
                 x: {
                   step: 0.1,
@@ -111,10 +99,10 @@ export default function VolumeView({
             },
             {
               type: 'scatter3D',
-              name: 'Samples',
+              name: 'Sample points',
               symbolSize: 5,
               data: values.map(([x, y]) => [x, y, Random[algorithm].probability(x, y)]),
-              dimensions: ['x', 'y', 'z'],
+              dimensions: ['x', 'y', 'probability'],
             }
           ]
         }}

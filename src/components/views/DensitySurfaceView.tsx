@@ -1,9 +1,8 @@
 import React, { useMemo, useState } from 'react';
-import Layout from '../Layout';
 import ReactECharts from 'echarts-for-react';
-import { CardOverflow, Divider, Typography, useColorScheme } from '@mui/joy';
+import { useColorScheme } from '@mui/joy';
 import Random from '../../utils/Random';
-import { textColors } from '../../utils/themes/charts/Dark';
+import { gradientColors, textColors } from '../../utils/themes/charts/Dark';
 import View from './View';
 
 export default function DensityBarView({
@@ -43,7 +42,7 @@ export default function DensityBarView({
       }
     }
     return data;
-  }, [bbox, algorithm, resolution, values]);
+  }, [bbox, resolution, values]);
 
   return (
     <View
@@ -61,19 +60,7 @@ export default function DensityBarView({
             min: 0,
             max: Math.max(...Array.from(data.values())),
             inRange: {
-              color: [
-                '#313695',
-                '#4575b4',
-                '#74add1',
-                '#abd9e9',
-                '#e0f3f8',
-                '#ffffbf',
-                '#fee090',
-                '#fdae61',
-                '#f46d43',
-                '#d73027',
-                '#a50026'
-              ]
+              color: gradientColors
             }
           },
           xAxis3D: {
