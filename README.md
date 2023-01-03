@@ -7,7 +7,7 @@ Randomite is a web app that generates random numbers and visualizes them in a va
 
 ## Usage
 
-The app is hosted at [https://randomite.bsodium.fr/](https://randomite.bsodium.fr/). You can also download the source code and run it locally. The app is written in TypeScript React and uses [Material-UI](https://material-ui.com/) for the UI.
+The app is hosted at [https://randomite.bsodium.fr/](https://randomite.bsodium.fr/). You can also download the source code and run it locally. The app is written in TypeScript React and uses [Joy-UI](https://mui.com/) for the UI.
 
 ## License
 
