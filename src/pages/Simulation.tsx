@@ -62,7 +62,7 @@ export default function Simulation() {
         href="https://github.com/BSoDium/randomite/fork"
         underline="none"
         target="_blank"
-        sx={{ position: "absolute", bottom: 20, right: 30, zIndex: 1000 }}
+        sx={{ position: "fixed", bottom: 20, right: 30, zIndex: 1000 }}
       >
         <Button
           color="neutral"
@@ -121,7 +121,7 @@ export default function Simulation() {
               onClick={randomize}
               loading={isLoading}
             >
-              Re-randomize
+              Shuffle
             </Button>
           </Badge>
         </Box>

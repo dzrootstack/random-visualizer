@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { StyledEngineProvider } from '@mui/joy/styles';
-import 'echarts-gl';
 
 import App from './App';
 
