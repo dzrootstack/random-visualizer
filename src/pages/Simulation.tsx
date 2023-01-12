@@ -67,6 +67,7 @@ export default function Simulation() {
         <Button
           color="neutral"
           variant='soft'
+          size="lg"
           startDecorator={<FiGithub />}
           sx={{ boxShadow: "md", borderRadius: 9999 }} 
         >
