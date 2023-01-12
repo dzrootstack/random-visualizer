@@ -3,7 +3,7 @@
 
 A pseudo-random number generator and visualizer for the web.
 
-Randomite is a web app that generates random numbers and visualizes them in a variety of ways. It is written in JavaScript and uses the [echarts](https://echarts.apache.org/en/index.html) library for visualization.
+Randomite is a web app that generates random numbers and visualizes them in a variety of ways. It is written in TypeScript and uses the [echarts](https://echarts.apache.org/en/index.html) library for visualization.
 
 ## Usage
 
