@@ -1,15 +1,13 @@
 import React from "react";
-import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import { Prism as SyntaxHighlighterBase } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import jsx from "react-syntax-highlighter/dist/esm/languages/prism/jsx";
 
-// Register language manually if using PrismLight
-SyntaxHighlighter.registerLanguage("jsx", jsx);
+const SyntaxHighlighter = SyntaxHighlighterBase as unknown as React.FC<any>;
 
 export default function Code({ code }: { code: string }) {
   return (
     <SyntaxHighlighter
-      language="jsx"
+      language="javascript"
       style={vscDarkPlus}
       customStyle={{
         borderRadius: 8,
