@@ -79,7 +79,7 @@ export default function View({
               }}
             >
               <Link
-                href="https://github.com/BSoDium/rng/issues/new"
+                href="https://github.com/dzrootstack/rng/issues/new"
                 underline="none"
                 target="_blank"
               >
@@ -93,12 +93,12 @@ export default function View({
                 </Button>
               </Link>
               <Link
-                href="https://github.com/sponsors/BSoDium"
+                href="https://github.com/sponsors/dzrootstack"
                 underline="none"
                 target="_blank"
               >
                 <Button
-                  color="info"
+                  color="primary" // or "neutral"
                   size="sm"
                   startDecorator={<GoHeart />}
                   sx={{ boxShadow: "sm" }}
