@@ -30,7 +30,7 @@ export default function ChatDescription({
         gap: 2,
       }}
     >
-      <Typography level="h6" component={"p"}>
+      <Typography level="body1" component={"p"}>
         Description
       </Typography>
       <Box
