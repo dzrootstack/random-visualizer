@@ -1,9 +1,21 @@
-import { Box, CardOverflow, Divider, IconButton, Link, Card, Modal, Tooltip, Typography, ModalClose, Button } from '@mui/joy';
-import React, { useState } from 'react';
-import { BsFullscreen } from 'react-icons/bs';
-import { GoBug, GoHeart } from 'react-icons/go';
+import {
+  Box,
+  CardOverflow,
+  Divider,
+  IconButton,
+  Link,
+  Card,
+  Modal,
+  Tooltip,
+  Typography,
+  ModalClose,
+  Button,
+} from "@mui/joy";
+import React, { useState } from "react";
+import { BsFullscreen } from "react-icons/bs";
+import { GoBug, GoHeart } from "react-icons/go";
 
-import Layout from '../Layout';
+import Layout from "../Layout";
 
 export default function View({
   info,
@@ -28,11 +40,11 @@ export default function View({
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <Card
-          variant='outlined'
+          variant="outlined"
           sx={{
             width: "min(95%, 900px)",
             height: "min(95%, 900px)",
-            boxShadow: "lg"
+            boxShadow: "lg",
           }}
         >
           {children}
@@ -47,12 +59,12 @@ export default function View({
           <CardOverflow
             variant="soft"
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
+              display: "flex",
+              flexDirection: "column",
               gap: 1.5,
               py: 1.5,
               px: 2,
-              bgcolor: 'background.level1',
+              bgcolor: "background.level1",
             }}
           >
             <Box
@@ -67,12 +79,12 @@ export default function View({
               }}
             >
               <Link
-                href='https://github.com/BSoDium/rng/issues/new'
-                underline='none'
-                target='_blank'
+                href="https://github.com/BSoDium/rng/issues/new"
+                underline="none"
+                target="_blank"
               >
                 <Button
-                  color='warning'
+                  color="warning"
                   size="sm"
                   startDecorator={<GoBug />}
                   sx={{ boxShadow: "sm" }}
@@ -81,12 +93,12 @@ export default function View({
                 </Button>
               </Link>
               <Link
-                href='https://github.com/sponsors/BSoDium'
-                underline='none'
-                target='_blank'
+                href="https://github.com/sponsors/BSoDium"
+                underline="none"
+                target="_blank"
               >
                 <Button
-                  color='info'
+                  color="info"
                   size="sm"
                   startDecorator={<GoHeart />}
                   sx={{ boxShadow: "sm" }}
@@ -96,16 +108,25 @@ export default function View({
               </Link>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row", gap: 1.5 }}>
-              <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
+              <Typography
+                level="body-md"
+                sx={{ fontWeight: "md", color: "text.secondary" }}
+              >
                 {info}
               </Typography>
               <Divider orientation="vertical" />
-              <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.primary' }}>
+              <Typography
+                level="body-md"
+                sx={{ fontWeight: "md", color: "text.primary" }}
+              >
                 {title}
               </Typography>
             </Box>
             {description && (
-              <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
+              <Typography
+                level="body-md"
+                sx={{ fontWeight: "md", color: "text.secondary" }}
+              >
                 {description}
               </Typography>
             )}
@@ -115,12 +136,12 @@ export default function View({
       <Layout.Tile>
         <Tooltip
           placement="left"
-          variant='outlined'
+          variant="outlined"
           title="Open interactive view"
         >
           <IconButton
             variant="plain"
-            color='neutral'
+            color="neutral"
             onClick={() => setFocused(true)}
             sx={{
               position: "absolute",
@@ -131,28 +152,36 @@ export default function View({
             <BsFullscreen />
           </IconButton>
         </Tooltip>
-        <Box sx={{
-          height: "100%",
-          width: "100%",
-          pointerEvents: "none",
-        }}>
+        <Box
+          sx={{
+            height: "100%",
+            width: "100%",
+            pointerEvents: "none",
+          }}
+        >
           {children}
         </Box>
         <CardOverflow
           variant="soft"
           sx={{
-            display: 'flex',
+            display: "flex",
             gap: 1.5,
             py: 1.5,
             px: 2,
-            bgcolor: 'background.level1',
+            bgcolor: "background.level1",
           }}
         >
-          <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
+          <Typography
+            level="body-md"
+            sx={{ fontWeight: "md", color: "text.secondary" }}
+          >
             {info}
           </Typography>
           <Divider orientation="vertical" />
-          <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
+          <Typography
+            level="body-md"
+            sx={{ fontWeight: "md", color: "text.secondary" }}
+          >
             {title}
           </Typography>
           {description && (
@@ -160,22 +189,28 @@ export default function View({
               <Divider orientation="vertical" />
               <Tooltip
                 placement="top-start"
-                variant='outlined'
+                variant="outlined"
                 title={
-                  <Box sx={{
-                    maxWidth: 300,
-                  }}>
-                    <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
+                  <Box
+                    sx={{
+                      maxWidth: 300,
+                    }}
+                  >
+                    <Typography
+                      level="body-md"
+                      sx={{ fontWeight: "md", color: "text.secondary" }}
+                    >
                       {description}
                     </Typography>
                   </Box>
                 }
                 arrow
               >
-                <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
-                  <Link>
-                    What am I looking at?
-                  </Link>
+                <Typography
+                  level="body-md"
+                  sx={{ fontWeight: "md", color: "text.secondary" }}
+                >
+                  <Link>What am I looking at?</Link>
                 </Typography>
               </Tooltip>
             </>

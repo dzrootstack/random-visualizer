@@ -16,11 +16,11 @@ export default function Formula({ algorithm }: { algorithm: string }) {
       <Typography level="h4">
         Formula - {Random[algorithm as keyof typeof Random].name} distribution
       </Typography>
-      <Typography level="h5">
+      <Typography level="h3">
         <Latex>{Random[algorithm as keyof typeof Random].formula}</Latex>
       </Typography>
       <Divider />
-      <Typography level="body1" component={"span"}>
+      <Typography level="body-md" component={"span"}>
         {Random[algorithm as keyof typeof Random].parameters.map(
           (parameter) => (
             <Box key={parameter}>
