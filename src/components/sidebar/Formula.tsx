@@ -1,7 +1,10 @@
 import { Box, Card, Divider, Typography } from "@mui/joy";
 import React from "react";
-import Latex from "react-latex";
+import LatexBase from "react-latex";
 import Random from "../../utils/Random";
+
+// Cast to make it JSX-compatible in TS strict mode
+const Latex = LatexBase as unknown as React.ComponentType<any>;
 
 export default function Formula({ algorithm }: { algorithm: string }) {
   return (
