@@ -30,9 +30,7 @@ export default function ChatDescription({
         gap: 2,
       }}
     >
-      <Typography level="body1" component={"p"}>
-        Description
-      </Typography>
+      <Typography level="h4">Description</Typography>
       <Box
         sx={{
           display: "flex",

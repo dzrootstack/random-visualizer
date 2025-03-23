@@ -13,7 +13,7 @@ export default function Formula({ algorithm }: { algorithm: string }) {
         gap: 2,
       }}
     >
-      <Typography level="body1" component={"p"}>
+      <Typography level="h4">
         Formula - {Random[algorithm as keyof typeof Random].name} distribution
       </Typography>
       <Typography level="h5">
